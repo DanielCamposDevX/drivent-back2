@@ -1,5 +1,6 @@
 import { ticketServices } from "@/services/ticket-service";
 import { Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
 
 
 
@@ -12,5 +13,15 @@ async function getTicketTypes(req: Request, res: Response) {
 
 
 
+async function getTicketByUser(req: Request, res: Response) {
+    const { userId } = req as JwtPayload;
+    const ticket = await ticketServices.getTicketByUser(userId);
+    console.log(ticket);
+    return res.status(200).send(ticket);
+}
 
-export const ticketControllers = { getTicketTypes }
+
+
+
+
+export const ticketControllers = { getTicketTypes, getTicketByUser }
